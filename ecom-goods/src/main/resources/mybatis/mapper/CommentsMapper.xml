@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CommentsMapper">
+    <cache/>
+    <!--  查询  -->
+    <select id="findCommentById" resultType="com.model.Comments"
+            parameterType="integer">
+        select * from comments
+        <where>
+            <if test="commId != null and commId != 0">
+                and comm_id = #{commId}
+            </if>
+        </where>
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insertComment" parameterType="com.model.Comments"
+            useGeneratedKeys="true" keyColumn="comm_id" keyProperty="commId">
+        insert into comments (comm_gd_id, comm_text)
+        values (#{commGdId}, #{commText})
+
+    </insert>
+
+    <update id="updateComment" parameterType="com.model.Comments">
+        update comments
+        <set>
+            <if test="commText != null">
+                comm_text = #{commText},
+            </if>
+        </set>
+        where comm_gd_id = #{commGdId}
+
+    </update>
+
+    <delete id="deleteComment" parameterType="integer">
+        delete from comments
+        where comm_id = #{commId}
+
+    </delete>
+</mapper>
+

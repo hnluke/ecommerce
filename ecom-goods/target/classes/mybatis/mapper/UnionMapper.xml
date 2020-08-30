@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UnionMapper">
+    <cache/>
+    <!--  查询  -->
+    <resultMap id="commentGoods" type="com.model.Comments" autoMapping="true">
+        <id property="commId" column="comm_id"></id>
+        <association property="goods" javaType="com.model.Goods" autoMapping="true">
+            <id property="goodId" column="good_id"></id>
+        </association>
+    </resultMap>
+    <select id="queryCommentByGoodId" resultMap="commentGoods" parameterType="integer">
+        select B.*, A.*
+        from comments A
+        left join goods B
+        on A.comm_gd_id = B.good_id
+        <where>
+            <if test="commId != null and commId > 0">
+                and A.comm_id = #{commId}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+

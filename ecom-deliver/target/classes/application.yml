@@ -1,0 +1,24 @@
+server:
+  port: 8083
+
+spring:
+  data:
+    mongodb:
+      host: 192.168.3.12
+      port: 27017
+      database: boot_ecom
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  application:
+    name: ecom-deliver
+
+
+eureka:
+  instance:
+    prefer-ip-address: true   # 注册服务时显示ip地址
+  client:
+    register-with-eureka: true # 将自己注册到eureka
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

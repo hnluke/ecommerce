@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.GoodsMapper">
+    <cache/>
+    <!--  查询  -->
+    <select id="findGood" resultType="com.model.Goods" useCache="false">
+        select * from goods
+<!--        <where>-->
+<!--            <if test="goodId != null and goodId != 0">-->
+<!--                and good_id = #{goodId}-->
+<!--            </if>-->
+<!--            <if test="goodStatus != null and goodStatus != ''">-->
+<!--                and good_status = #{goodStatus}-->
+<!--            </if>-->
+<!--        </where>-->
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insertGood" parameterType="com.model.Goods"
+            useGeneratedKeys="true" keyColumn="good_Id" keyProperty="goodId">
+        insert into goods (good_name, good_type, good_model, good_product, good_store,
+            good_status, good_price, good_detail)
+        values (#{goodName}, #{goodType}, #{goodModel}, #{goodProduct}, #{goodStore},
+            #{goodStatus}, #{goodPrice}, #{goodDetail})
+
+    </insert>
+
+<!--    <update id="updateGoodNumber">-->
+<!--        update goods-->
+<!--        <set>-->
+<!--            <if test="goodStore != null">-->
+<!--                good_store = good_store - #{goodStore},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where good_id = #{goodId}-->
+
+<!--    </update>-->
+
+    <update id="updateGoodNumber">
+        update goods
+        <set>
+            <if test="goodStore != null">
+                good_store = good_store - #{goodStore},
+            </if>
+        </set>
+        where good_id = #{goodId}
+
+    </update>
+
+    <!-- 修改 -->
+    <update id="updateGood" parameterType="com.model.Goods" >
+        update goods
+        <set>
+            <if test="goodName != null and goodName.trim() != ''">
+                good_name = #{goodName},
+            </if>
+            <if test="goodType != null and goodType.trim() != ''">
+                good_type = #{goodType},
+            </if>
+            <if test="goodModel != null and goodModel.trim() != ''">
+                good_model = #{goodModel},
+            </if>
+            <if test="goodProduct != null and goodProduct.trim() != ''">
+                good_product = #{goodProduct},
+            </if>
+            <if test="goodStore != null and goodProduct >= 0">
+                good_store = #{goodStore},
+            </if>
+            <if test="goodStatus != null and goodStatus.trim() != ''">
+                good_status = #{goodStatus},
+            </if>
+            <if test="goodPrice != null and goodPrice >= 0">
+                good_price = #{goodPrice},
+            </if>
+            <if test="goodPutUpDate != null ">
+                good_putUpDate = #{goodPutUpDate},
+            </if>
+            <if test="goodDetail != null and goodDetail.trim() != ''">
+                good_detail = #{goodDetail},
+            </if>
+        </set>
+        where good_id = #{goodId}
+    </update>
+
+    <delete id="deleteGood" parameterType="integer">
+        delete from goods
+        where good_id = #{goodId}
+
+    </delete>
+</mapper>
+
